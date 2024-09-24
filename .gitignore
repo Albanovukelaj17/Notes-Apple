@@ -1,0 +1,48 @@
+# Ignore virtual environments
+venv/
+neue_venv/
+*.dylib
+*.so
+
+# macOS-related files
+.DS_Store
+
+# Build files
+build/
+DerivedData/
+# Xcode
+.DS_Store
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# macOS Files
+*.DS_Store
+*.swp
+*.swo
+
+# Exclude virtual environments (falls du Python verwendest)
+neue_venv/
+*.dylib
+*.so
+
