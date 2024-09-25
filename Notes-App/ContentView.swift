@@ -7,33 +7,38 @@
 
 import SwiftUI
 
+struct Note: Identifiable {
+    let id = UUID()
+    var title : String
+    var content : String
+}
+
 struct ContentView: View {
     @State private var text = ""  // Der eingegebene Text
 
     var body: some View {
         VStack {
             Text("Enter your text below:")
-                .font(.title)  // Titeltext für das Label
+                .font(.title)
+                .foregroundColor(.white)  // Textfarbe weiß
                 .padding()
 
-            // Ein größeres Textfeld für die Eingabe
+            // Ein größeres Textfeld mit schwarzem Hintergrund, das so viel Platz wie möglich einnimmt
             TextEditor(text: $text)
-                .frame(height: 200)  // Die Höhe des Textfelds
+                .foregroundColor(.white)  // Textfarbe weiß
+                .background(Color.black)  // Hintergrundfarbe schwarz
                 .padding()
-                .border(Color.gray, width: 1)  // Rahmen um das Textfeld
-
-            // Der eingegebene Text wird hier angezeigt
-            Text("Your input:")
-                .font(.headline)
-                .padding(.top)
-            Text(text)  // Zeigt den eingegebenen Text an
-                .padding()
-                .background(Color.gray.opacity(0.2))  // Verwende stattdessen Color.gray mit Opazität
-                .cornerRadius(8)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)  // Nimmt so viel Platz wie möglich ein
+                .padding(.vertical)
+                
+               
+        
 
             Spacer()  // Fügt Platz zwischen den Elementen hinzu
         }
-        .padding()  // Fügt allgemeines Padding um den gesamten VStack hinzu
+        .padding()
+        .background(Color.black)  // Hintergrund des gesamten Views schwarz
+        .ignoresSafeArea()  // Deckt die gesamte Fläche ab, auch den Safe Area Bereich
     }
 }
 
