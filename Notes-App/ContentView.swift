@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var text = "Hello, world!"
+    @State private var text = ""  // Der eingegebene Text
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text(text)
-            Button(action: {
-                text = "Button pressed!"
-            }) {
-                Text("Press Me")
-            }
-            .padding()
+            Text("Enter your text below:")
+                .font(.title)  // Titeltext für das Label
+                .padding()
+
+            // Ein größeres Textfeld für die Eingabe
+            TextEditor(text: $text)
+                .frame(height: 200)  // Die Höhe des Textfelds
+                .padding()
+                .border(Color.gray, width: 1)  // Rahmen um das Textfeld
+
+            // Der eingegebene Text wird hier angezeigt
+            Text("Your input:")
+                .font(.headline)
+                .padding(.top)
+            Text(text)  // Zeigt den eingegebenen Text an
+                .padding()
+                .background(Color.gray.opacity(0.2))  // Verwende stattdessen Color.gray mit Opazität
+                .cornerRadius(8)
+
+            Spacer()  // Fügt Platz zwischen den Elementen hinzu
         }
-        .padding()
+        .padding()  // Fügt allgemeines Padding um den gesamten VStack hinzu
     }
 }
 
