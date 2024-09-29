@@ -16,16 +16,34 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             // Linke Seite: Liste der Notizen
-            List(notes) { note in
-                Button(action: {
-                    selectedNote = note  // Setzt die ausgewählte Notiz
-                    loadNoteContent(note: note)  // Lädt den Inhalt der Notiz von der Festplatte
-                }) {
-                    Text(note.title)  // Zeigt den Titel der Notiz in der Liste an
+            VStack {
+                List(notes) { note in
+                    Button(action: {
+                        selectedNote = note  // Setzt die ausgewählte Notiz
+                        loadNoteContent(note: note)  // Lädt den Inhalt der Notiz von der Festplatte
+                    }) {
+                        HStack {
+                            Text(note.title)  // Zeigt den Titel der Notiz in der Liste an
+                            Spacer()
+                        }
+                    }
                 }
+                .navigationTitle("Notizen")
+                .listStyle(SidebarListStyle())
+
+                // "+"-Taste, um eine neue Notiz hinzuzufügen
+                Button(action: {
+                    createNewNote()  // Neue Notiz erstellen
+                }) {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.blue)
+                        Text("Neue Notiz")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
             }
-            .navigationTitle("Notizen")
-            .listStyle(SidebarListStyle())
             
             // Rechte Seite: Bearbeitbarer Inhalt der ausgewählten Notiz
             if let selectedNote = selectedNote {
@@ -70,6 +88,19 @@ struct ContentView: View {
         }
     }
     
+    // Funktion zum Erstellen einer neuen Notiz
+    func createNewNote() {
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
+        // Eine neue Notiz erstellen mit leerem Titel und Inhalt
+        let newNoteFile = documentsURL.appendingPathComponent("NeueNotiz\(notes.count + 1).txt")
+        let newNote = Note(title: "Neue Notiz \(notes.count + 1)", content: "", filePath: newNoteFile)
+        notes.append(newNote)
+        selectedNote = newNote  // Die neue Notiz sofort auswählen
+        newContent = ""  // Der TextEditor beginnt leer
+    }
+    
     // Funktion zum Laden von Notizen aus dem Dateisystem
     func loadNotes() {
         let fileManager = FileManager.default
@@ -89,4 +120,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()  // Dies stellt sicher, dass die ContentView-Vorschau korrekt geladen wird
     }
 }
-
